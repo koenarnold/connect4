@@ -1,0 +1,8 @@
+.player-setup-container {
+  display: flex;
+}
+
+.player-setup {
+  display: flex;
+  flex-direction: column;
+}
