@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './styles/App.css'
 import Setup from '/src/components/Setup'
+import Board from '/src/components/Board'
 
 function App() {
 
@@ -12,10 +13,13 @@ switch (page) {
   case 0:
     return (
       <>
-        <Setup playerOneName={playerOneName} setPlayerOneName={setPlayerOneName} playerTwoName={playerTwoName} setPlayerTwoName={setPlayerTwoName}/>
+        <Setup playerOneName={playerOneName} setPlayerOneName={setPlayerOneName} playerTwoName={playerTwoName} setPlayerTwoName={setPlayerTwoName} setPage={setPage}/>
       </>
     )
   case 1:
+    return (
+      <Board />
+    )
     break;
 }
 
