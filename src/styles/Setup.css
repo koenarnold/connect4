@@ -9,18 +9,22 @@
 
 .color-selector-container {
   border: 1px solid black;
-  border-radius: 2px;
-  height: 25vh;
-  width: 25vw;
-  overflow: scroll;
-  display: flex;
-  padding: 1vw;
+  height: 400px;
+  width: 400px
 }
 
-.circle {
-  height: 25px;
-  width: 25px;
+.circle-1 {
+  height: 100px;
+  width: 100px;
   background-color: #bbb;
   border-radius: 50%;
+  text-align: center;
 }
 
+.circle-2 {
+  height: 100px;
+  width: 100px;
+  background-color: #bbb;
+  border-radius: 50%;
+  text-align: center;
+}
