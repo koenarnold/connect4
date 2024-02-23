@@ -8,19 +8,19 @@ function App() {
   const [page, setPage] = useState(0)
   const [playerOneName, setPlayerOneName] = useState('Player 1')
   const [playerTwoName, setPlayerTwoName] = useState('Player 2')
+  const [players, updatePlayers] = useState([{name: 'Player 1', color: "#f23224"},{name: 'Player 2', color: "#5099F6"}])
 
 switch (page) {
   case 0:
     return (
       <>
-        <Setup playerOneName={playerOneName} setPlayerOneName={setPlayerOneName} playerTwoName={playerTwoName} setPlayerTwoName={setPlayerTwoName} setPage={setPage}/>
+        <Setup playerOneName={playerOneName} setPlayerOneName={setPlayerOneName} playerTwoName={playerTwoName} setPlayerTwoName={setPlayerTwoName} setPage={setPage} players={players} updatePlayers={updatePlayers}/>
       </>
     )
   case 1:
     return (
-      <Board />
+      <Board players={players} updatePlayers={updatePlayers} />
     )
-    break;
 }
 
 }
