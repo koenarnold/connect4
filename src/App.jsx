@@ -19,7 +19,7 @@ switch (page) {
     )
   case 1:
     return (
-      <Board players={players} updatePlayers={updatePlayers} />
+      <Board players={players} updatePlayers={updatePlayers} setPage={setPage}/>
     )
 }
 

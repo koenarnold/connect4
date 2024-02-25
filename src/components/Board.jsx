@@ -1,13 +1,13 @@
 /* eslint-disable react/jsx-key */
 import {useState, useRef} from 'react'
 import '/src/styles/Board.css'
+import GameEnd from '/src/components/GameEnd'
 
-export default function Board ({players, updatePlayers}) {
+export default function Board ({players, updatePlayers, setPage}) {
 
   const [gameBoard, updateGameBoard] = useState([[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]])
 
   const [playerWin, togglePlayerWin] = useState(false)
-
   const playerTurn = useRef(false);
 
 
@@ -36,15 +36,16 @@ export default function Board ({players, updatePlayers}) {
         if (gameBoard[column][row] === currentPlayerNum) {
           let winningDiscs = [];
           winningDiscs.push([column, row])
+
            // horizontal
           if (gameBoard[column + 1] !== undefined) {
             if (gameBoard[column + 1][row] === currentPlayerNum) {
-              winningDiscs.push([column + 1, row])
               if (gameBoard[column + 2] !== undefined) {
                 if (gameBoard[column + 2][row] === currentPlayerNum) {
-                  winningDiscs.push([column + 2, row])
                   if (gameBoard[column + 3] !== undefined) {
                     if (gameBoard[column + 3][row] === currentPlayerNum) {
+                      winningDiscs.push([column + 1, row])
+                      winningDiscs.push([column + 2, row])
                       winningDiscs.push([column + 3, row])
                       let winInfo = {line: winningDiscs, player: currentPlayerNum}
                       console.log(winInfo)
@@ -60,12 +61,12 @@ export default function Board ({players, updatePlayers}) {
           // vertical
           if (gameBoard[column][row - 1] !== undefined) {
             if (gameBoard[column][row - 1] === currentPlayerNum) {
-              winningDiscs.push([column, row - 1])
               if (gameBoard[column][row - 2] !== undefined) {
                 if (gameBoard[column][row - 2] === currentPlayerNum) {
-                  winningDiscs.push([column, row - 2])
                   if (gameBoard[column][row - 3] !== undefined) {
                     if (gameBoard[column][row - 3] === currentPlayerNum) {
+                      winningDiscs.push([column, row - 1])
+                      winningDiscs.push([column, row - 2])
                       winningDiscs.push([column, row - 3])
                       let winInfo = {line: winningDiscs, player: currentPlayerNum}
                       console.log(winInfo)
@@ -81,12 +82,12 @@ export default function Board ({players, updatePlayers}) {
           //diagonal right
           if (gameBoard[column + 1] !== undefined) {
             if (gameBoard[column + 1][row + 1] === currentPlayerNum) {
-              winningDiscs.push([column + 1, row + 1])
               if (gameBoard[column + 2] !== undefined) {
                 if (gameBoard[column + 2][row + 2] === currentPlayerNum) {
-                  winningDiscs.push([column + 2, row + 2])
                   if (gameBoard[column + 3] !== undefined) {
                     if (gameBoard[column + 3][row + 3] === currentPlayerNum) {
+                      winningDiscs.push([column + 1, row + 1])
+                      winningDiscs.push([column + 2, row + 2])
                       winningDiscs.push([column + 3, row + 3])
                       let winInfo = {line: winningDiscs, player: currentPlayerNum}
                       console.log(winInfo)
@@ -102,12 +103,12 @@ export default function Board ({players, updatePlayers}) {
           //diagonal left
           if (gameBoard[column - 1] !== undefined) {
             if (gameBoard[column - 1][row + 1] === currentPlayerNum) {
-              winningDiscs.push([column - 1, row + 1])
               if (gameBoard[column - 2] !== undefined) {
                 if (gameBoard[column - 2][row + 2] === currentPlayerNum) {
-                  winningDiscs.push([column - 2, row + 2])
                   if (gameBoard[column - 3] !== undefined) {
                     if (gameBoard[column - 3][row + 3] === currentPlayerNum) {
+                      winningDiscs.push([column - 1, row + 1])
+                      winningDiscs.push([column - 2, row + 2])
                       winningDiscs.push([column - 3, row + 3])
                       let winInfo = {line: winningDiscs, player: currentPlayerNum}
                       console.log(winInfo)
@@ -155,6 +156,7 @@ export default function Board ({players, updatePlayers}) {
 
   return (
     <div className="gameboard-container">
+      <GameEnd playerWin={playerWin} togglePlayerWin={togglePlayerWin} setPage={setPage} playerTurn={playerTurn} updateGameBoard={updateGameBoard}/>
       {gameBoard.map((column, columnIndex)=>(
         <div className="gameboard-column">
         {gameBoard[columnIndex].map((value, rowIndex)=>{
