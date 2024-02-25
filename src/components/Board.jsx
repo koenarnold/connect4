@@ -1,53 +1,100 @@
 /* eslint-disable react/jsx-key */
-import {useState} from 'react'
+import {useState, useRef} from 'react'
 import '/src/styles/Board.css'
 
 export default function Board ({players, updatePlayers}) {
 
   const [gameBoard, updateGameBoard] = useState([[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]])
 
-  const [playerTurn, setPlayerTurn] = useState(false)
+  const playerTurn = useRef(false);
 
-  function horizontalVerticalCheck () {
+
+  function winCheck () {
+
     let currentPlayerNum;
-    if (!playerTurn) {
+    let filledSpotCount = 0;
+
+    if (!playerTurn.current) {
       currentPlayerNum = 1;
     } else {
       currentPlayerNum = 2;
     }
 
     // oh god get ready for this win check algorithim
+    // i hate these if statements, very cluttered
+    // lets try to consolidate these to their own functions in the
+    // future to make it a lil prettier
 
     for (let column = 0; column < gameBoard.length; column++) {
       for (let row = 0; row < gameBoard[column].length; row++) {
+        if (gameBoard[column][row] > 0) {
+          filledSpotCount = filledSpotCount + 1;
+          console.log(filledSpotCount)
+        }
         if (gameBoard[column][row] === currentPlayerNum) {
-          if (gameBoard[column + 1][row] !== 'undefined') {
+
+           // horizontal
+          if (gameBoard[column + 1] !== undefined) {
             if (gameBoard[column + 1][row] === currentPlayerNum) {
-              if (gameBoard[column + 2][row] === currentPlayerNum) {
-                if (gameBoard[column + 3][row] === currentPlayerNum) {
-                  console.log('PLAYER ' + currentPlayerNum + " WINS")
+              if (gameBoard[column + 2] !== undefined) {
+                if (gameBoard[column + 2][row] === currentPlayerNum) {
+                  if (gameBoard[column + 3] !== undefined) {
+                    if (gameBoard[column + 3][row] === currentPlayerNum) {
+                      alert('Player ' + currentPlayerNum + ' Won by horizontal')
+                    }
+                  }
                 }
-             }
-           }
-          } else if (gameBoard[column][row - 1] !== 'undefined') {
+              }
+            }
+          }
+
+          // vertical
+          if (gameBoard[column][row - 1] !== undefined) {
             if (gameBoard[column][row - 1] === currentPlayerNum) {
-              if (gameBoard[column][row - 2] === currentPlayerNum) {
-                if (gameBoard[column][row - 3] === currentPlayerNum) {
-                 console.log('PLAYER ' + currentPlayerNum + " WINS")
-               }
-             }
-           }
-          } else if (gameBoard[column - 1][row] !== 'undefined') {
-            if (gameBoard[column - 1][row] === currentPlayerNum) {
-              if (gameBoard[column - 2][row] === currentPlayerNum) {
-                if (gameBoard[column - 3][row] === currentPlayerNum) {
-                  console.log('PLAYER ' + currentPlayerNum + " WINS")
+              if (gameBoard[column][row - 2] !== undefined) {
+                if (gameBoard[column][row - 2] === currentPlayerNum) {
+                  if (gameBoard[column][row - 3] !== undefined) {
+                    if (gameBoard[column][row - 3] === currentPlayerNum) {
+                      alert('Player ' + currentPlayerNum + ' Won by vertical')
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          //diagonal right
+          if (gameBoard[column + 1] !== undefined) {
+            if (gameBoard[column + 1][row + 1] === currentPlayerNum) {
+              if (gameBoard[column + 2] !== undefined) {
+                if (gameBoard[column + 2][row + 2] === currentPlayerNum) {
+                  if (gameBoard[column + 3] !== undefined) {
+                    if (gameBoard[column + 3][row + 3] === currentPlayerNum) {
+                      alert('Player ' + currentPlayerNum + ' Won by diagonal right')
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          //diagonal left
+          if (gameBoard[column - 1] !== undefined) {
+            if (gameBoard[column - 1][row + 1] === currentPlayerNum) {
+              if (gameBoard[column - 2] !== undefined) {
+                if (gameBoard[column - 2][row + 2] === currentPlayerNum) {
+                  if (gameBoard[column - 3] !== undefined) {
+                    if (gameBoard[column - 3][row + 3] === currentPlayerNum) {
+                      alert('Player ' + currentPlayerNum + ' Won by diagonal left')
+                    }
+                  }
                 }
               }
             }
           }
         }
       }
+      if (filledSpotCount === 42) {alert("DRAW")}
     }
   }
 
@@ -56,12 +103,11 @@ export default function Board ({players, updatePlayers}) {
     for (let row = 0; row < gameBoard[column].length; row++) {
       if (gameBoard[column][row] === 0) {
         let num;
-        if (!playerTurn) {
+        if (!playerTurn.current) {
           num = 1;
         } else {
           num = 2;
         }
-        console.log('')
         var updatedBoard = gameBoard.map((col, index)=> {
           if (Number(column) === index) {
             col[row] = num;
@@ -71,11 +117,12 @@ export default function Board ({players, updatePlayers}) {
           }
         })
         updateGameBoard(updatedBoard)
-        horizontalVerticalCheck()
-        setPlayerTurn(!playerTurn)
+        winCheck()
+        playerTurn.current = !playerTurn.current
         break;
       }
     }
+
   }
 
 
