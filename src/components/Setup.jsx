@@ -1,7 +1,10 @@
 import {useState} from 'react'
 import '/src/styles/Setup.css'
+import Rules from '/src/components/Rules'
 
-export default function Setup ({playerOneName, setPlayerOneName, playerTwoName, setPlayerTwoName, setPage, players, updatePlayers}) {
+export default function Setup ({setPage, players, updatePlayers}) {
+
+  const [showRulesModal, setShowRulesModal] = useState(false)
 
   function handleNameChange (e) {
     let updatedNames = players.map((playerInfo, index) => {
@@ -45,6 +48,8 @@ export default function Setup ({playerOneName, setPlayerOneName, playerTwoName, 
     <div>
       <h1>Game Setup</h1>
       <button onClick={()=>{setPage(1)}}>board</button>
+      <button onClick={()=>{setShowRulesModal(!showRulesModal)}}>RULES</button>
+      {showRulesModal ? <Rules /> : null}
       <div className="player-setup-container">
         <div className="player-setup">
           <h2>{players[0].name}</h2>
