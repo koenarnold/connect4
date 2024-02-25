@@ -1,0 +1,16 @@
+.rules-modal-container {
+  position: fixed;
+  width: 40vw;
+  height: 40vh;
+  background-color: blue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15vh;
+}
+
+.rules-modal-content {
+  color: white;
+
+
+}
