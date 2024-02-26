@@ -2,6 +2,7 @@
 import {useState, useRef} from 'react'
 import '/src/styles/Board.css'
 import GameEnd from '/src/components/GameEnd'
+import Disc from '/src/components/Disc'
 
 export default function Board ({players, updatePlayers, setPage}) {
 
@@ -47,10 +48,9 @@ export default function Board ({players, updatePlayers, setPage}) {
                       winningDiscs.push([column + 1, row])
                       winningDiscs.push([column + 2, row])
                       winningDiscs.push([column + 3, row])
-                      let winInfo = {line: winningDiscs, player: currentPlayerNum}
+                      let winInfo = {line: winningDiscs, player: currentPlayerNum, draw: false}
                       console.log(winInfo)
                       togglePlayerWin(winInfo)
-                      alert('Player ' + currentPlayerNum + ' Won by horizontal')
                     }
                   }
                 }
@@ -68,10 +68,9 @@ export default function Board ({players, updatePlayers, setPage}) {
                       winningDiscs.push([column, row - 1])
                       winningDiscs.push([column, row - 2])
                       winningDiscs.push([column, row - 3])
-                      let winInfo = {line: winningDiscs, player: currentPlayerNum}
+                      let winInfo = {line: winningDiscs, player: currentPlayerNum, draw: false}
                       console.log(winInfo)
                       togglePlayerWin(winInfo)
-                      alert('Player ' + currentPlayerNum + ' Won by vertical')
                     }
                   }
                 }
@@ -89,10 +88,9 @@ export default function Board ({players, updatePlayers, setPage}) {
                       winningDiscs.push([column + 1, row + 1])
                       winningDiscs.push([column + 2, row + 2])
                       winningDiscs.push([column + 3, row + 3])
-                      let winInfo = {line: winningDiscs, player: currentPlayerNum}
+                      let winInfo = {line: winningDiscs, player: currentPlayerNum, draw: false}
                       console.log(winInfo)
                       togglePlayerWin(winInfo)
-                      alert('Player ' + currentPlayerNum + ' Won by diagonal right')
                     }
                   }
                 }
@@ -110,10 +108,9 @@ export default function Board ({players, updatePlayers, setPage}) {
                       winningDiscs.push([column - 1, row + 1])
                       winningDiscs.push([column - 2, row + 2])
                       winningDiscs.push([column - 3, row + 3])
-                      let winInfo = {line: winningDiscs, player: currentPlayerNum}
+                      let winInfo = {line: winningDiscs, player: currentPlayerNum, draw: false}
                       console.log(winInfo)
                       togglePlayerWin(winInfo)
-                      alert('Player ' + currentPlayerNum + ' Won by diagonal left')
                     }
                   }
                 }
@@ -122,32 +119,37 @@ export default function Board ({players, updatePlayers, setPage}) {
           }
         }
       }
-      if (filledSpotCount === 42) {alert("DRAW")}
+      console.log(filledSpotCount)
+      if (filledSpotCount === 42) {
+        togglePlayerWin({line: null, player: null, draw: true})
+      }
     }
   }
 
   function handleDiscPlacement (e) {
-    let column = e.target.id[0]
-    for (let row = 0; row < gameBoard[column].length; row++) {
-      if (gameBoard[column][row] === 0) {
-        let num;
-        if (!playerTurn.current) {
-          num = 1;
-        } else {
-          num = 2;
-        }
-        var updatedBoard = gameBoard.map((col, index)=> {
-          if (Number(column) === index) {
-            col[row] = num;
-            return col;
+    if (!playerWin) {
+      let column = e.target.id[0]
+      for (let row = 0; row < gameBoard[column].length; row++) {
+        if (gameBoard[column][row] === 0) {
+          let num;
+          if (!playerTurn.current) {
+            num = 1;
           } else {
-            return col;
+            num = 2;
           }
-        })
-        updateGameBoard(updatedBoard)
-        winCheck()
-        playerTurn.current = !playerTurn.current
-        break;
+          var updatedBoard = gameBoard.map((col, index)=> {
+            if (Number(column) === index) {
+              col[row] = num;
+              return col;
+            } else {
+              return col;
+            }
+          })
+          updateGameBoard(updatedBoard)
+          winCheck()
+          playerTurn.current = !playerTurn.current
+          break;
+        }
       }
     }
 
@@ -156,51 +158,12 @@ export default function Board ({players, updatePlayers, setPage}) {
 
   return (
     <div className="gameboard-container">
-      <GameEnd playerWin={playerWin} togglePlayerWin={togglePlayerWin} setPage={setPage} playerTurn={playerTurn} updateGameBoard={updateGameBoard}/>
+      <GameEnd playerWin={playerWin} togglePlayerWin={togglePlayerWin} setPage={setPage} playerTurn={playerTurn} updateGameBoard={updateGameBoard} players={players}/>
       {gameBoard.map((column, columnIndex)=>(
         <div className="gameboard-column">
-        {gameBoard[columnIndex].map((value, rowIndex)=>{
-
-          let discStyle = {};
-          const discId = columnIndex.toString() + rowIndex.toString();
-
-          if (value === 1) {
-            discStyle.backgroundColor = players[0].color
-            if (playerWin) {
-              for (let i = 0; i < playerWin.line.length; i++) {
-                if (playerWin.line[i][0] === columnIndex && playerWin.line[i][1] === rowIndex) {
-                  discStyle.border = "2px solid black"
-                }
-              }
-            }
-            return (
-              <div className="disc-container">
-                <div onClick={handleDiscPlacement} style={discStyle} id={discId} className="circle">{columnIndex} {rowIndex}</div>
-              </div>
-            )
-          } else if (value === 2) {
-            discStyle.backgroundColor = players[1].color
-            if (playerWin) {
-              for (let i = 0; i < playerWin.line.length; i++) {
-                if (playerWin.line[i][0] === columnIndex && playerWin.line[i][1] === rowIndex) {
-                  discStyle.border = "2px solid black"
-                }
-              }
-            }
-            return (
-              <div className="disc-container">
-                <div onClick={handleDiscPlacement} style={discStyle} id={discId} className="circle">{columnIndex} {rowIndex}</div>
-              </div>
-            )
-          } else {
-            return (
-              <div className="disc-container">
-                <div onClick={handleDiscPlacement} id={discId} className="circle">{columnIndex} {rowIndex}</div>
-              </div>
-            )
-          }
-        }
-        )}
+        {gameBoard[columnIndex].map((discValue, rowIndex)=>(
+          <Disc columnIndex={columnIndex} rowIndex={rowIndex} discValue={discValue} players={players} playerWin={playerWin} handleDiscPlacement={handleDiscPlacement}/>
+        ))}
         </div>
       ))}
     </div>
