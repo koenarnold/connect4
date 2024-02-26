@@ -27,4 +27,4 @@ This is my take on a webapp version of the classic game Connect Four. My main go
 - eslint
 
 ## Deployed Version
-[Click here](connect4ka.netlify.com)
+[Click here](connect4ka.netlify.app)
