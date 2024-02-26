@@ -4,8 +4,8 @@
 This is my take on a webapp version of the classic game Connect Four. My main goal for this was to create a very simple version of the board game with one or two extra features. Speaking of..
 
 ## Features
-- Player vs Player Gameplay
-- Customizable Names
+- Play against a friend
+- Customizable names
 - Choose from 9 different disc colors 🙀
 
 
@@ -16,12 +16,12 @@ This is my take on a webapp version of the classic game Connect Four. My main go
 4. Go to localhost:5173 on browser and enjoy!
 
 ## Dependencies
-@emotion/react
-@emotion/styled
-@mui/material
-react
-react-dom
-styled-components
+- @emotion/react
+- @emotion/styled
+- @mui/material
+- react
+- react-dom
+- styled-components
 
 ## Dev Dependencies
-eslint
+- eslint
