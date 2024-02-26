@@ -118,7 +118,7 @@ export default function Setup ({setPage, players, updatePlayers, theme, NameText
         <div className="player-setup">
           <div className="player-name-container">
             <h2>{players[0].name ? players[0].name : "\xa0"}</h2>
-            <NameTextInput placeholder="change name" onChange={handleNameChange} id="player-1" sx={{marginBottom: "2vh", width: "15em"}} error={false}/>
+            <NameTextInput placeholder="change name" onChange={handleNameChange} id="player-1" sx={{marginBottom: "2vh", width: "15em"}} error={false} autoComplete="off"/>
           </div>
           <Paper sx={colorSelectorContainerCss} elevation={3}>
             <div className="color-selector-column">
@@ -142,7 +142,7 @@ export default function Setup ({setPage, players, updatePlayers, theme, NameText
         <div className="player-setup">
           <div className="player-name-container">
             <h2>{players[1].name ? players[1].name : "\xa0"}</h2>
-            <NameTextInput placeholder="change name" name={players[1].name} onChange={handleNameChange} id="player-2" sx={{marginBottom: "2vh", width: "15em"}} error={false}/>
+            <NameTextInput placeholder="change name" name={players[1].name} onChange={handleNameChange} id="player-2" sx={{marginBottom: "2vh", width: "15em"}} error={false} autoComplete="off"/>
           </div>
           <Paper sx={colorSelectorContainerCss} elevation={3} >
             <div className="color-selector-column">
