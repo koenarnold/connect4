@@ -155,9 +155,7 @@ export default function Board ({players, updatePlayers, setPage, theme}) {
           })
           updateGameBoard(updatedBoard)
           winCheck()
-          console.log(playerTurn.current)
           playerTurn.current = !playerTurn.current
-          console.log(playerTurn.current)
           break;
         }
       }
