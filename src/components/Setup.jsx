@@ -1,10 +1,66 @@
 import {useState} from 'react'
 import '/src/styles/Setup.css'
 import Rules from '/src/components/Rules'
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import Paper from '@mui/material/Paper';
+import TextField from '@mui/material/TextField';
+import styled from 'styled-components';
 
-export default function Setup ({setPage, players, updatePlayers}) {
+
+
+export default function Setup ({setPage, players, updatePlayers, theme, NameTextInput}) {
 
   const [showRulesModal, setShowRulesModal] = useState(false)
+  const [colorHasBeenChosen, setColorHasBeenChosen] = useState({1: '1', 2: '13'})
+
+  const [openRules, toggleOpenRules] = useState(false)
+  const handleOpenRules = () => toggleOpenRules(true);
+  const handleCloseRules = () => toggleOpenRules(false);
+
+
+  const gameSetupContainerCss = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: theme.palette.primary.main
+  }
+
+  const colorSelectorContainerCss = {
+    display: "flex",
+    justifyContent: "space-between",
+    padding: "1vh",
+    borderRadius: "1vw",
+    backgroundColor: theme.palette.sixth.main
+  }
+
+  const rulesBtnCss = {
+    backgroundColor: "#ffffff",
+    ':hover': {
+      backgroundColor: '#E7E4E4'
+    },
+    position: "fixed",
+    right: "0",
+    margin: "0 15em 25em 0",
+    height: "3em",
+    width: "6em",
+    fontSize: "1em",
+    borderRadius: "1vw",
+    fontFamily: '"Josefin Sans", "sans-serif"'
+  }
+
+  function handleGameStart () {
+    console.log(players)
+    if (players[0].color === players[1].color) {
+      alert("Please choose different colors")
+    } else {
+      if (players[0].name.length === 0 || players[1].name.length === 0) {
+        alert("Invalid name")
+      } else {
+        setPage(1)
+      }
+    }
+  }
 
   function handleNameChange (e) {
     let updatedNames = players.map((playerInfo, index) => {
@@ -28,54 +84,88 @@ export default function Setup ({setPage, players, updatePlayers}) {
   }
 
   function handleColorChange (e) {
-    // e.target.className[e.target.className.length - 1]
     let playerToChangeColor = Number(e.target.className[e.target.className.length - 1])
-    let colorChosen = e.target.style.backgroundColor
+    let colorPicked = e.target.style.backgroundColor
     let updatedColors = players.map((playerInfo, index) => {
       if (index + 1 === playerToChangeColor) {
-        playerInfo.color = colorChosen;
+        playerInfo.color = colorPicked;
         return playerInfo;
       } else {
         return playerInfo;
       }
     })
-    e.target.style.border = "2px solid black"
+    if (playerToChangeColor === 1) {
+      let oldColor = document.getElementById(colorHasBeenChosen[1])
+      oldColor.style.border = ""
+      e.target.style.border = "0.2em solid black"
+      let updatedColorInfo = {...colorHasBeenChosen, 1: e.target.id}
+      setColorHasBeenChosen(updatedColorInfo)
+    }
+    if (playerToChangeColor === 2) {
+      let oldColor = document.getElementById(colorHasBeenChosen[2])
+      oldColor.style.border = ""
+      e.target.style.border = "0.2em solid black"
+      let updatedColorInfo = {...colorHasBeenChosen, 2: e.target.id}
+      setColorHasBeenChosen(updatedColorInfo)
+    }
     updatePlayers(updatedColors)
     console.log(players)
   }
 
   return (
-    <div>
-      <h1>Game Setup</h1>
-      <button onClick={()=>{setPage(1)}}>board</button>
-      <button onClick={()=>{setShowRulesModal(!showRulesModal)}}>RULES</button>
-      {showRulesModal ? <Rules /> : null}
+    <Container sx={gameSetupContainerCss} >
+      {showRulesModal ? <Rules setShowRulesModal={setShowRulesModal}/> : null}
       <div className="player-setup-container">
         <div className="player-setup">
-          <h2>{players[0].name}</h2>
-          <input type="text" onChange={handleNameChange} style={{marginBottom: "5vh"}} id="player-1"/>
-          <div className="color-selector-container">
-            <div className="circle-1" style={{backgroundColor: "#f23224"}} onClick={handleColorChange} ></div>
-            <div className="circle-1" style={{backgroundColor: "#5099F6"}} onClick={handleColorChange}></div>
-            <div className="circle-1" style={{backgroundColor: "#F1F650"}} onClick={handleColorChange}></div>
-            <div className="circle-1" style={{backgroundColor: "#69F650"}} onClick={handleColorChange}></div>
-            <div className="circle-1" style={{backgroundColor: "#c619e0"}} onClick={handleColorChange}></div>
-            <div className="circle-1" style={{backgroundColor: "#F650DF"}} onClick={handleColorChange}></div>
+          <div className="player-name-container">
+            <h2>{players[0].name ? players[0].name : "\xa0"}</h2>
+            <NameTextInput placeholder="change name" onChange={handleNameChange} id="player-1" sx={{marginBottom: "2vh", width: "15em"}} error={false}/>
           </div>
+          <Paper sx={colorSelectorContainerCss} elevation={3}>
+            <div className="color-selector-column">
+              <div className="circle-1" style={{backgroundColor: "#f23224", border: "0.2em solid black"}} onClick={handleColorChange} id="1" ></div>
+              <div className="circle-1" style={{backgroundColor: "#F09811"}} onClick={handleColorChange} id="2" ></div>
+              <div className="circle-1" style={{backgroundColor: "#F1F650"}} onClick={handleColorChange} id="3" ></div>
+            </div>
+            <div className="color-selector-column">
+              <div className="circle-1" style={{backgroundColor: "#1FF011"}} onClick={handleColorChange} id="4" ></div>
+              <div className="circle-1" style={{backgroundColor: "#11B3F0"}} onClick={handleColorChange} id="5" ></div>
+              <div className="circle-1" style={{backgroundColor: "#112CF0"}} onClick={handleColorChange} id="6" ></div>
+            </div>
+            <div className="color-selector-column">
+              <div className="circle-1" style={{backgroundColor: "#8711F0"}} onClick={handleColorChange} id="7" ></div>
+              <div className="circle-1" style={{backgroundColor: "#F011D5"}} onClick={handleColorChange} id="8" ></div>
+              <div className="circle-1" style={{backgroundColor: "#F01165"}} onClick={handleColorChange} id="9" ></div>
+            </div>
+          </Paper>
         </div>
+        <Button onClick={handleGameStart} variant="contained" color="fourth" className="start-btn" sx={{fontFamily: '"Press Start 2P", "sans-serif"', fontSize: "1em", height: "7em", width: "10em", zIndex: "0"}} >start</Button>
         <div className="player-setup">
-          <h2>{players[1].name}</h2>
-          <input type="text" onChange={handleNameChange} style={{marginBottom: "5vh"}} id="player-2"/>
-          <div className="color-selector-container">
-          <div className="circle-2" style={{backgroundColor: "#f23224"}} onClick={handleColorChange}></div>
-            <div className="circle-2" style={{backgroundColor: "#5099F6"}} onClick={handleColorChange}></div>
-            <div className="circle-2" style={{backgroundColor: "#F1F650"}} onClick={handleColorChange}></div>
-            <div className="circle-2" style={{backgroundColor: "#69F650"}} onClick={handleColorChange}></div>
-            <div className="circle-2" style={{backgroundColor: "#c619e0"}} onClick={handleColorChange}></div>
-            <div className="circle-2" style={{backgroundColor: "#F650DF"}} onClick={handleColorChange}></div>
+          <div className="player-name-container">
+            <h2>{players[1].name ? players[1].name : "\xa0"}</h2>
+            <NameTextInput placeholder="change name" name={players[1].name} onChange={handleNameChange} id="player-2" sx={{marginBottom: "2vh", width: "15em"}} error={false}/>
           </div>
+          <Paper sx={colorSelectorContainerCss} elevation={3} >
+            <div className="color-selector-column">
+              <div className="circle-2" style={{backgroundColor: "#f23224"}} onClick={handleColorChange} id="10" ></div>
+              <div className="circle-2" style={{backgroundColor: "#F09811"}} onClick={handleColorChange} id="11" ></div>
+              <div className="circle-2" style={{backgroundColor: "#F1F650"}} onClick={handleColorChange} id="12" ></div>
+            </div>
+            <div className="color-selector-column">
+              <div className="circle-2" style={{backgroundColor: "#1FF011", border: "0.2em solid black"}} onClick={handleColorChange} id="13" ></div>
+              <div className="circle-2" style={{backgroundColor: "#11B3F0"}} onClick={handleColorChange} id="14" ></div>
+              <div className="circle-2" style={{backgroundColor: "#112CF0"}} onClick={handleColorChange} id="15" ></div>
+            </div>
+            <div className="color-selector-column">
+              <div className="circle-2" style={{backgroundColor: "#8711F0"}} onClick={handleColorChange} id="16" ></div>
+              <div className="circle-2" style={{backgroundColor: "#F011D5"}} onClick={handleColorChange} id="17" ></div>
+              <div className="circle-2" style={{backgroundColor: "#F01165"}} onClick={handleColorChange} id="18" ></div>
+            </div>
+          </Paper>
         </div>
       </div>
-    </div>
+      <Button variant="outlined" sx={rulesBtnCss} onClick={handleOpenRules}>RULES</Button>
+      <Rules openRules={openRules} handleCloseRules={handleCloseRules}/>
+    </Container>
   )
 }
