@@ -1,7 +1,7 @@
 # CONNECT FOUR
 
 ## Overview
-This is my take on a webapp version of the classic game Connect Four. My main goal for this was to create a very simple version of the board game with one or two extra features. Speaking of..
+This is my take on the classic game Connect Four. My main goal for this was to create a very simple version of the board game with one or two extra features. 
 
 ## Features
 - Play against a friend
