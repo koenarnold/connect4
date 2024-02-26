@@ -1,7 +1,7 @@
 .gameboard-container {
   display: flex;
-  width: 50vw;
-  height: 80vh;
+  width: 45vw;
+  height: 74vh;
 }
 
 .gameboard-column {
@@ -11,3 +11,9 @@
   height: 100%
 }
 
+.player-turn-display {
+  -webkit-text-stroke-width: 0.06em;
+  -webkit-text-stroke-color: black;
+  color: white;
+  padding: 0 1em
+}

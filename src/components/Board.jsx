@@ -57,7 +57,6 @@ export default function Board ({players, updatePlayers, setPage, theme}) {
                       winningDiscs.push([column + 2, row])
                       winningDiscs.push([column + 3, row])
                       let winInfo = {line: winningDiscs, player: currentPlayerNum, draw: false}
-                      console.log(winInfo)
                       togglePlayerWin(winInfo)
                       handleOpenResults()
                     }
@@ -78,7 +77,6 @@ export default function Board ({players, updatePlayers, setPage, theme}) {
                       winningDiscs.push([column, row - 2])
                       winningDiscs.push([column, row - 3])
                       let winInfo = {line: winningDiscs, player: currentPlayerNum, draw: false}
-                      console.log(winInfo)
                       togglePlayerWin(winInfo)
                       handleOpenResults()
                     }
@@ -99,7 +97,6 @@ export default function Board ({players, updatePlayers, setPage, theme}) {
                       winningDiscs.push([column + 2, row + 2])
                       winningDiscs.push([column + 3, row + 3])
                       let winInfo = {line: winningDiscs, player: currentPlayerNum, draw: false}
-                      console.log(winInfo)
                       togglePlayerWin(winInfo)
                       handleOpenResults()
                     }
@@ -120,7 +117,6 @@ export default function Board ({players, updatePlayers, setPage, theme}) {
                       winningDiscs.push([column - 2, row + 2])
                       winningDiscs.push([column - 3, row + 3])
                       let winInfo = {line: winningDiscs, player: currentPlayerNum, draw: false}
-                      console.log(winInfo)
                       togglePlayerWin(winInfo)
                       handleOpenResults()
                     }
@@ -131,7 +127,6 @@ export default function Board ({players, updatePlayers, setPage, theme}) {
           }
         }
       }
-      console.log(filledSpotCount)
       if (filledSpotCount === 42) {
         togglePlayerWin({line: null, player: null, draw: true})
         handleOpenResults()
@@ -160,7 +155,9 @@ export default function Board ({players, updatePlayers, setPage, theme}) {
           })
           updateGameBoard(updatedBoard)
           winCheck()
+          console.log(playerTurn.current)
           playerTurn.current = !playerTurn.current
+          console.log(playerTurn.current)
           break;
         }
       }
@@ -178,9 +175,15 @@ export default function Board ({players, updatePlayers, setPage, theme}) {
     backgroundColor: theme.palette.sixth.main
   }
 
+  const currentPlayerDisplayCss = {
+    marginBottom: "0.8%",
+    fontFamily: "",
+  }
+
   return (
     <div style={{display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", paddingTop: "3%", width: "100%", height: "100%"}}>
       <GameEnd playerWin={playerWin} togglePlayerWin={togglePlayerWin} setPage={setPage} playerTurn={playerTurn} updateGameBoard={updateGameBoard} players={players} openResults={openResults} handleCloseResults={handleCloseResults}/>
+      {playerTurn.current ? <Paper sx={currentPlayerDisplayCss}><h2 className="player-turn-display">{players[1].name}&#8217;s turn</h2></Paper> : <Paper sx={currentPlayerDisplayCss}><h2 className="player-turn-display">{players[0].name}&#8217;s turn</h2></Paper>}
       <Paper sx={gameBoardBackgroundCss}>
         <div className="gameboard-container">
           {gameBoard.map((column, columnIndex)=>(
