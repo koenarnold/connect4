@@ -3,14 +3,22 @@ import {useState, useRef} from 'react'
 import '/src/styles/Board.css'
 import GameEnd from '/src/components/GameEnd'
 import Disc from '/src/components/Disc'
+import Paper from '@mui/material/Paper';
 
-export default function Board ({players, updatePlayers, setPage}) {
+export default function Board ({players, updatePlayers, setPage, theme}) {
 
   const [gameBoard, updateGameBoard] = useState([[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]])
 
   const [playerWin, togglePlayerWin] = useState(false)
   const playerTurn = useRef(false);
 
+  const [openResults, toggleOpenResults] = useState(false)
+  const handleOpenResults = () => toggleOpenResults(true);
+  const handleCloseResults = (event, reason) => {
+    if (reason !== 'backdropClick') {
+      toggleOpenResults(false);
+    }
+  };
 
 
   function winCheck () {
@@ -51,6 +59,7 @@ export default function Board ({players, updatePlayers, setPage}) {
                       let winInfo = {line: winningDiscs, player: currentPlayerNum, draw: false}
                       console.log(winInfo)
                       togglePlayerWin(winInfo)
+                      handleOpenResults()
                     }
                   }
                 }
@@ -71,6 +80,7 @@ export default function Board ({players, updatePlayers, setPage}) {
                       let winInfo = {line: winningDiscs, player: currentPlayerNum, draw: false}
                       console.log(winInfo)
                       togglePlayerWin(winInfo)
+                      handleOpenResults()
                     }
                   }
                 }
@@ -91,6 +101,7 @@ export default function Board ({players, updatePlayers, setPage}) {
                       let winInfo = {line: winningDiscs, player: currentPlayerNum, draw: false}
                       console.log(winInfo)
                       togglePlayerWin(winInfo)
+                      handleOpenResults()
                     }
                   }
                 }
@@ -111,6 +122,7 @@ export default function Board ({players, updatePlayers, setPage}) {
                       let winInfo = {line: winningDiscs, player: currentPlayerNum, draw: false}
                       console.log(winInfo)
                       togglePlayerWin(winInfo)
+                      handleOpenResults()
                     }
                   }
                 }
@@ -122,6 +134,7 @@ export default function Board ({players, updatePlayers, setPage}) {
       console.log(filledSpotCount)
       if (filledSpotCount === 42) {
         togglePlayerWin({line: null, player: null, draw: true})
+        handleOpenResults()
       }
     }
   }
@@ -155,17 +168,30 @@ export default function Board ({players, updatePlayers, setPage}) {
 
   }
 
+  const gameBoardBackgroundCss = {
+    padding: "3em 1em",
+    width: "50%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: "5vh",
+    backgroundColor: theme.palette.sixth.main
+  }
 
   return (
-    <div className="gameboard-container">
-      <GameEnd playerWin={playerWin} togglePlayerWin={togglePlayerWin} setPage={setPage} playerTurn={playerTurn} updateGameBoard={updateGameBoard} players={players}/>
-      {gameBoard.map((column, columnIndex)=>(
-        <div className="gameboard-column">
-        {gameBoard[columnIndex].map((discValue, rowIndex)=>(
-          <Disc columnIndex={columnIndex} rowIndex={rowIndex} discValue={discValue} players={players} playerWin={playerWin} handleDiscPlacement={handleDiscPlacement}/>
-        ))}
+    <div style={{display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", paddingTop: "3%", width: "100%", height: "100%"}}>
+      <GameEnd playerWin={playerWin} togglePlayerWin={togglePlayerWin} setPage={setPage} playerTurn={playerTurn} updateGameBoard={updateGameBoard} players={players} openResults={openResults} handleCloseResults={handleCloseResults}/>
+      <Paper sx={gameBoardBackgroundCss}>
+        <div className="gameboard-container">
+          {gameBoard.map((column, columnIndex)=>(
+            <div className="gameboard-column" key={columnIndex}>
+            {gameBoard[columnIndex].map((discValue, rowIndex)=>(
+              <Disc columnIndex={columnIndex} key={rowIndex} rowIndex={rowIndex} discValue={discValue} players={players} playerWin={playerWin} handleDiscPlacement={handleDiscPlacement}/>
+            ))}
+            </div>
+          ))}
         </div>
-      ))}
+      </Paper>
     </div>
   )
 }

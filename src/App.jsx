@@ -31,7 +31,7 @@ switch (page) {
     )
   case 1:
     return (
-      <Board players={players} updatePlayers={updatePlayers} setPage={setPage}/>
+      <Board players={players} updatePlayers={updatePlayers} setPage={setPage} theme={theme}/>
     )
 }
 
