@@ -1,4 +1,4 @@
-
+import '/src/styles/Disc.css'
 
 export default function Disc ({columnIndex, rowIndex, discValue, players, playerWin, handleDiscPlacement, }) {
 

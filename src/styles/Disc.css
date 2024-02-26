@@ -1,0 +1,20 @@
+.disc-container {
+  margin: 0.5em;
+  height: 100%;
+  width: 90%;
+  margin-bottom: 10%;
+}
+
+.circle:hover {
+  background-color: #E0DFDF;
+}
+
+.circle {
+  height: 110%;
+  width: 100%;
+  background-color: #bbb;
+  border-radius: 50%;
+  text-align: center;
+  box-sizing: border-box;
+  border: 0.1em solid black;
+}

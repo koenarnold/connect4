@@ -1,30 +1,13 @@
 .gameboard-container {
   display: flex;
-  width: 70%;
-  height: 70%;
+  width: 50vw;
+  height: 80vh;
 }
 
 .gameboard-column {
   display: flex;
   flex-direction: column-reverse;
-}
-
-.disc-container {
-  padding: 2px;
-  margin: 2px;
-  height: 100px;
-  width: 100px;
-}
-
-.circle:hover {
-  background-color: red;
-}
-
-.circle {
-  height: 100px;
-  width: 100px;
-  background-color: #bbb;
-  border-radius: 50%;
-  text-align: center;
+  width: 100%;
+  height: 100%
 }
 
