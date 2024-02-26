@@ -6,13 +6,13 @@ This is my take on a webapp version of the classic game Connect Four. My main go
 ## Features
 - Play against a friend
 - Customizable names
-- Choose from 9 different disc colors 🙀
+- Choose from **9** different disc colors 🙀
 
 
 ## How to Run
 1. Clone this project
-2. Run npm install in command line
-3. Run npm run dev in command line
+2. Run ```npm install``` in command line
+3. Run ```npm run dev``` in command line
 4. Go to localhost:5173 on browser and enjoy!
 
 ## Dependencies
