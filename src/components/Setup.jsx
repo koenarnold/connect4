@@ -23,7 +23,8 @@ export default function Setup ({setPage, players, updatePlayers, theme, NameText
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: theme.palette.primary.main
+    backgroundColor: theme.palette.primary.main,
+    padding: "8%"
   }
 
   const colorSelectorContainerCss = {
@@ -40,17 +41,16 @@ export default function Setup ({setPage, players, updatePlayers, theme, NameText
       backgroundColor: '#E7E4E4'
     },
     position: "fixed",
-    right: "0",
-    margin: "0 15em 25em 0",
+    top: "0",
+    margin: "3em 0",
     height: "3em",
-    width: "6em",
+    width: "3em",
     fontSize: "1em",
     borderRadius: "1vw",
     fontFamily: '"Josefin Sans", "sans-serif"'
   }
 
   function handleGameStart () {
-    console.log(players)
     if (players[0].color === players[1].color) {
       alert("Please choose different colors")
     } else {
@@ -109,7 +109,6 @@ export default function Setup ({setPage, players, updatePlayers, theme, NameText
       setColorHasBeenChosen(updatedColorInfo)
     }
     updatePlayers(updatedColors)
-    console.log(players)
   }
 
   return (
@@ -164,7 +163,7 @@ export default function Setup ({setPage, players, updatePlayers, theme, NameText
           </Paper>
         </div>
       </div>
-      <Button variant="outlined" sx={rulesBtnCss} onClick={handleOpenRules}>RULES</Button>
+      <Button variant="outlined" sx={rulesBtnCss} onClick={handleOpenRules}>?</Button>
       <Rules openRules={openRules} handleCloseRules={handleCloseRules}/>
     </Container>
   )
