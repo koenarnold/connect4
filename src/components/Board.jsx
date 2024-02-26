@@ -175,15 +175,16 @@ export default function Board ({players, updatePlayers, setPage, theme}) {
     backgroundColor: theme.palette.sixth.main
   }
 
-  const currentPlayerDisplayCss = {
-    marginBottom: "0.8%",
-    fontFamily: "",
-  }
-
   return (
     <div style={{display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", paddingTop: "3%", width: "100%", height: "100%"}}>
       <GameEnd playerWin={playerWin} togglePlayerWin={togglePlayerWin} setPage={setPage} playerTurn={playerTurn} updateGameBoard={updateGameBoard} players={players} openResults={openResults} handleCloseResults={handleCloseResults}/>
-      {playerTurn.current ? <Paper sx={currentPlayerDisplayCss}><h2 className="player-turn-display">{players[1].name}&#8217;s turn</h2></Paper> : <Paper sx={currentPlayerDisplayCss}><h2 className="player-turn-display">{players[0].name}&#8217;s turn</h2></Paper>}
+      {playerTurn.current ?
+      <Paper sx={{marginBottom: "0.8%", backgroundColor: players[1].color, borderRadius: "0.5vw"}}>
+        <h2 style={{backgroundColor: players[1].color, fontFamily: '"Rubik", "sans-serif"', fontSize: "160%"}} className="player-turn-display">{players[1].name}&#8217;s turn</h2>
+      </Paper> :
+      <Paper sx={{marginBottom: "0.8%", backgroundColor: players[0].color, borderRadius: "0.5vw"}}>
+        <h2 style={{backgroundColor: players[0].color, fontFamily: '"Rubik", "sans-serif"', fontSize: "160%"}} className="player-turn-display">{players[0].name}&#8217;s turn</h2>
+      </Paper>}
       <Paper sx={gameBoardBackgroundCss}>
         <div className="gameboard-container">
           {gameBoard.map((column, columnIndex)=>(

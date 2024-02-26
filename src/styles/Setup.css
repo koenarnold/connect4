@@ -51,6 +51,6 @@
   align-items: center;
   max-width: 20em;
   overflow: scroll;
-  font-family: "Josefin Sans", sans-serif;
+  font-family: "Josefin Sans", "sans-serif";
   color: white
 }
